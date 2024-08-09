@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Address Book</title>
+    <style>
+    /* Resetting some default styles */
+body, h1, h2, p, label, input, button, ul {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Header */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header h1 {
+    font-size: 2rem;
+}
+
+/* Main Sections */
+.address-form, .address-list {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.address-form h2, .address-list h2 {
+    margin-bottom: 1rem;
+}
+
+.address-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.address-form input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.address-form button {
+    padding: 0.75rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.address-form button:hover {
+    background-color: #0056b3;
+}
+
+.message {
+    margin-top: 1rem;
+    color: #d9534f;
+}
+
+.address-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.address-list li {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.address-list li:hover {
+    background-color: #e2e2e2;
+    transform: scale(1.02);
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .address-form input, .address-form button {
+        font-size: 0.9rem;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+    
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Address Book</h1>
+        </div>
+    </header>
+
+    <main>
+        <section class="address-form">
+            <div class="container">
+                <h2>Add New Contact</h2>
+                <form id="contact-form">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                    
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="phone" required>
+                    
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    
+                    <button type="submit">Add Contact</button>
+                    <div id="form-message" class="message"></div>
+                </form>
+            </div>
+        </section>
+
+        <section class="address-list">
+            <div class="container">
+                <h2>Contact List</h2>
+                <ul id="contact-list">
+                    <!-- Contacts will be added here dynamically -->
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Address Book. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+    
+    document.addEventListener('DOMContentLoaded', () => {
+    const contactForm = document.getElementById('contact-form');
+    const contactList = document.getElementById('contact-list');
+    const formMessage = document.getElementById('form-message');
+
+    contactForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+        
+        // Gather form data
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
+
+        // Validate inputs
+        if (name && phone && email) {
+            // Create new contact item
+            const contactItem = document.createElement('li');
+            contactItem.innerHTML = `
+                <strong>Name:</strong> ${name}<br>
+                <strong>Phone:</strong> ${phone}<br>
+                <strong>Email:</strong> ${email}
+            `;
+            contactList.appendChild(contactItem);
+
+            // Reset form and show success message
+            contactForm.reset();
+            formMessage.textContent = 'Contact added successfully!';
+            formMessage.style.color = '#5bc0de';
+
+            // Scroll to contact list
+            contactList.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            formMessage.textContent = 'Please fill in all fields.';
+            formMessage.style.color = '#d9534f';
+        }
+    });
+});
+
+    
+    
+    </script>
+</body>
+</html>
